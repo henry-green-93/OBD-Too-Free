@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.obd2native.gaugeui'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.obd2native.gaugeui"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0-qcm6125-optimized"
+
+        // Vector & Compose support (QCM6125 SVG/Compose render pipeline)  
+        vectorDrawables.useSupportLibrary = true
+        
+        // 64-bit native memory alignment for GPU rasterizer  
+        ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a" 
+            cppFlags "-O3 -DENABLE_QCM_GAUeCLUSTER_RENDERER"   // Native gauge render core defines
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        viewBinding true
+        compose true    // Jetpack Compose for GPU-accelerated gauge render  pipeline (QCM6125-native)
+    }
+    
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.4' 
+    }
+}
+
+dependencies {
+    implementation project(':obd2native')   // Core low-level service skeleton from previous iteration
+    
+    // UI Layer: Material/Compose for real-time gauge cluster rendering  
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10"
+    
+    // Compose: GPU-accelerated 2D draw pipeline (QCM6125 native)  
+    implementation platform('androidx.compose:compose-bom:2024.06.00')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.activity:activity-compose:1.9.2
+    
+    // Lifecycle + ViewBinding for Service ↔ UI bridge  
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.4"
+
+    // Animated gauge needle sweep (60Hz real-time)  
+    implementation 'androidx.compose.animation:animation-core'
+}

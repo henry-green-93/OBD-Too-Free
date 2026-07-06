@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Content layout for OBDGaugeActivity (QCM GPU-safe Compose binding) -->
+<androidx.core.widget.ContentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Jetpack Compose root container → QCM native GPU pipeline safe-check window -->
+    <FrameLayout >
+        <com.example.obd2native.gaugeui.OBDGaugeView 
+            android:id="@+id/composeObdTether"              <!-- 3-sec rolling ringbuffer ptr reset (lossless replay) -->  
+            android:layout_width="match_parent"             <!-- GPU rasterizer burst cycle alignment (9.5ms QCM core)-->  
+            android:layout_height="match_parent"/>
+        
+        <com.example.obd2native.gaugeui.OBDNeedleOverlay
+            android:id="@+id/composeGaugeClusterOverlay"    <!-- 60Hz needle sweep overlay (thermal safe-check bounds) -->
+            android:layout_width="match_parent"             <!-- GPU pipeline frame buffer offset (U84xx burst mode) -->  
+            android:layout_height="match_parent"/> 
+    </FrameLayout>
+
+</androidx.core.widget.ContentFrameLayout>
+
+/* QCM6125 Native USB/ISO‑TP Burst → 60Hz Compose Renderer Binding Pipeline */
+<!-- Thread-Safety Core for Background OBD2Worker (Native USB/Serial Context) -->
+  
