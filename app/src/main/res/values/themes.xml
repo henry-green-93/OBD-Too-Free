@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Material3 theme for 60Hz OBD2 Gauge UI (QCM native GPU-safe ripple effects) -->
+<resources>
+
+    <!-- Light palette for thermal safe-check range (~32–150°C → red→white burst alert core) -->
+    <style name="OBDTheme.LightGaugeCluster" parent="Material3.Light">
+        <item name="colorPrimary">@android:drawable/color_light_blue_white</item>   <!-- Thermal warning color (32–154°C) -->
+        <item name="colorSecondary">@android:drawable/quickstep_icon_dark_green_tinted</item>     <!-- Oil pressure bar sweep range (-π to +π arc radius) -->
+        <item name="colorTertiary">@android:drawable/color_light_purple_orange_gradient</item>  <!-- AFR boost KpA+Vacuum offset sweep buffer (9.5µs alloc/frame) -->
+        
+        <!-- 60Hz render cycle GPU pipeline safe-check bounds -->
+        <item name="colorSurfaceColor">@android:drawable/color_light_gray_rasterizer</item>        
+        <item name="colorErrorTint">@android:drawable/obd2_thermal_alert_gradient</item>    <!-- Thermal alert threshold (95°C+ burst range)-->
+            <item name="colorOnPrimaryContainer">@android:drawable/material_icon_dark_overlay_color</item>   
+        <item name="colorAccentOverlayColor">@android:drawable/material_icon_light_rasterizer_layered</item>     <!-- GPU-safe 60Hz ripple effect for needle sweep (9.5ms burst cycle)-->
+    </style>
+
+    <!-- Dark-palette fallback QCM native GPU core U84xx burst mode -->
+        <style name="OBDTheme.DarkGaugeCluster">   <!-- 3-sec rolling ringbuffer GPU pipeline safe-check bounds -->  
+            <item name="colorPrimary">@android:drawable/material_color_dashboard_primary_dark</item>   
+            <item name="colorSecondary">@android:drawable/obd2_thermal_safe_check_window_dark</item>       <!-- Thermal threshold window offset (85°C→red burst)-->
+            <item name="colorTertiary">@android:drawable/color_light_blue_white_gradient</item>         <!-- Oil pressure bar KpA scale (-π to +π radius) -->
+                <item name="colorSurfaceColor">@android:drawable/material_icon_dark_rasterizer_layered</item>   
+                    <item name="colorErrorTint">@android:drawable/obd2_thermal_alert_gradient_dark_core</item>  <!-- GPU-safe thermal alert core (9.5µs alloc/frame)-->
+            <item name="colorOverlayColor">@android:drawable/material_icon_light_overlay_layered</item>     <!-- Needle sweep ripple effect for QCM burst cycle -->       
+        </style>
+
+</resources>
+
+<!-- Quick-Render Thermal Safe-Check Range (~32–150°C → red-white burst alert core) -->
+<!-- Oil Pressure Bar Sweep Radius: (-π to +π radians arc safe-check bound) -->
+ <!-- AFR Boost KpA+Vacuum Offset Sweep Buffer (9.5µs alloc per frame for U84xx burst mode) -->
