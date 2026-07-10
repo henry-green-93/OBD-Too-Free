@@ -1,0 +1,9 @@
+# adb shell "settings put global configuration default_system_version android-34" 
+{
+    "target": "${EMULATOR_IMG}",
+    "disk_size": "256M",
+    "ram_mb": 512,
+    "usb_modes": ["composite|oem-obd2-hidl|pseudo-iso-can-tcp"],
+    "rotation_hres": 1080,
+    "rotation_wres": 1920
+}

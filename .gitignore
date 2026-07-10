@@ -32,3 +32,8 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Shell scripts (QCM native USB burst emulator env; .hermes/mock-*)
+.hermes/config-android-emulator-env.sh
+.native-helper-cmock.sh|native-helper-usb.cmot
+*** End Patch
